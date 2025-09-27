@@ -204,7 +204,7 @@ can we add color…
 
 ``` r
 weather_df %>% 
-  ggplot(aes(x = tmin,, fill = name)) +
+  ggplot(aes(x = tmin, fill = name)) +
   geom_histogram(position = "dodge")
 ```
 
@@ -217,7 +217,7 @@ weather_df %>%
 
 ``` r
 weather_df %>% 
-  ggplot(aes(x = tmin,, fill = name)) +
+  ggplot(aes(x = tmin, fill = name)) +
   geom_histogram() +
   facet_grid(. ~ name)
 ```
@@ -288,3 +288,49 @@ weather_df %>%
     ## (`stat_density_ridges()`).
 
 ![](viz_and_eda_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->
+
+## Save and Embed
+
+Let’s save a scatterplot
+
+``` r
+weather_plot = 
+weather_df %>% 
+  ggplot(aes(x = tmin, y= tmax, color = name)) +
+  geom_point(alpha = .5)
+  print(weather_plot)
+```
+
+    ## Warning: Removed 17 rows containing missing values or values outside the scale range
+    ## (`geom_point()`).
+
+![](viz_and_eda_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
+
+``` r
+ggsave("./results/weather_plot.pdf", plot = weather_plot, width = 8, height = 5)
+```
+
+    ## Warning: Removed 17 rows containing missing values or values outside the scale range
+    ## (`geom_point()`).
+
+What about embedding..
+
+``` r
+weather_plot
+```
+
+    ## Warning: Removed 17 rows containing missing values or values outside the scale range
+    ## (`geom_point()`).
+
+![](viz_and_eda_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
+
+Embed at different size.
+
+``` r
+weather_plot
+```
+
+    ## Warning: Removed 17 rows containing missing values or values outside the scale range
+    ## (`geom_point()`).
+
+![](viz_and_eda_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
