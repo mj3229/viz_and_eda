@@ -202,3 +202,56 @@ ggplot(data = molokai, aes(x = date, y = tmax, color = name)) +
     ## (`geom_point()`).
 
 ![](viz_and_eda2_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
+
+## `patchwork`
+
+remember faceting?
+
+``` r
+weather_df %>% 
+  ggplot(aes(x =tmin, fill = name)) +
+  geom_density(alpha = .5) +
+  facet_grid(. ~name)
+```
+
+    ## Warning: Removed 17 rows containing non-finite outside the scale range
+    ## (`stat_density()`).
+
+![](viz_and_eda2_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+
+what happens when you want multiplanel plots but can’t facet?: patchwork
+
+``` r
+tmax_tmin_p =
+weather_df %>% 
+  ggplot(aes(x =tmin, y = tmax, color = name)) +
+  geom_point(alpha= .5) +
+  theme(legend.position = "none")
+
+prcp_dens_p =
+  weather_df %>% 
+  filter(prcp > 0) %>% 
+  ggplot(aes(x =prcp, fill = name)) +
+  geom_density(alpha = .5)
+
+tmax_data_p =
+  weather_df %>% 
+  ggplot(aes(x = date, y = tmax, color = name)) +
+  geom_point() +
+  geom_smooth(se = FALSE) +
+  theme(legend.position = "none")
+
+tmax_tmin_p / (prcp_dens_p + tmax_data_p)
+```
+
+    ## Warning: Removed 17 rows containing missing values or values outside the scale range
+    ## (`geom_point()`).
+
+    ## `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
+
+    ## Warning: Removed 17 rows containing non-finite outside the scale range
+    ## (`stat_smooth()`).
+    ## Removed 17 rows containing missing values or values outside the scale range
+    ## (`geom_point()`).
+
+![](viz_and_eda2_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
