@@ -255,3 +255,39 @@ tmax_tmin_p / (prcp_dens_p + tmax_data_p)
     ## (`geom_point()`).
 
 ![](viz_and_eda2_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
+
+\##Data Manipulation
+
+Control your factors.
+
+``` r
+weather_df %>% 
+  mutate(
+    name = factor(name),
+    name = forcats:: fct_relevel(name, c("Molokai_HI"))
+  ) %>% 
+  ggplot(aes(x =name, y = tmax, fill = name)) +
+  geom_violin(alpha= .5) 
+```
+
+    ## Warning: Removed 17 rows containing non-finite outside the scale range
+    ## (`stat_ydensity()`).
+
+![](viz_and_eda2_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
+
+What if we wanted densities for tmin and tmax simultaneously?
+
+``` r
+weather_df %>% 
+  filter(name == "CentralPark_NY") %>% 
+  pivot_longer(
+    tmax:tmin,
+    names_to = "observation",
+    values_to = "temperatures"
+  ) %>% 
+  ggplot(aes(x = temperatures, fill = observation)) +
+  geom_density(alpha = .5) +
+  facet_grid(. ~ name)
+```
+
+![](viz_and_eda2_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
