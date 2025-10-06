@@ -1,0 +1,54 @@
+---
+title: "EDA"
+subtitle: "Part III"
+output: github_document
+---
+
+```{r setup}
+library(tidyverse)
+library(patchwork)
+```
+
+## Load the weather data
+
+
+```{r}
+library(p8105.datasets)
+data("weather_df")
+  
+weather_df = weather_df %>%
+  mutate(month = floor_date(date, unit = "month"))
+```
+
+## `group by`
+
+```{r}
+weather_df %>% 
+  group_by(name, month) 
+```
+
+## counting things
+
+count month observations
+
+```{r}
+weather_df %>% 
+  group_by(name, month) %>% 
+  summarize(n_obs = n())
+```
+
+we can use `count()`
+
+```{r}
+weather_df %>% 
+  count(name, month, name = "n_obs")
+```
+
+**NEVER** use base R's `table`
+
+```{r, eval = FALSE}
+weather_df %>% 
+  pull(month) %>% 
+  table()
+```
+
